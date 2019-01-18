@@ -84,22 +84,40 @@ export default {
 
     connectInterview() {
       this.isLoading = true;
+      // TODO
     },
 
     gotEmail(email) {
-      this.email = email;
-      this.messages.push({
-        content: 'Alright! Lets begin the interview',
-        cb: this.gotEmail,
-        own: false,
-        key:
-          '_' +
-          Math.random()
-            .toString(36)
-            .substr(2, 9),
-      });
-      this.connectInterview();
-      this.disabled = true;
+      if (
+        new RegExp(
+          // eslint-disable-next-lines
+          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, // eslint-disable-line no-useless-escape
+        ).test(email)
+      ) {
+        this.email = email;
+        this.messages.push({
+          content: 'Alright! Lets begin the interview.',
+          own: false,
+          key:
+            '_' +
+            Math.random()
+              .toString(36)
+              .substr(2, 9),
+        });
+        this.connectInterview();
+        this.disabled = true;
+      } else {
+        this.messages.push({
+          content: 'Please enter a valid email.',
+          cb: this.gotEmail,
+          own: false,
+          key:
+            '_' +
+            Math.random()
+              .toString(36)
+              .substr(2, 9),
+        });
+      }
     },
   },
 };
