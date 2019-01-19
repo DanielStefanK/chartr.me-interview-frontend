@@ -34,8 +34,10 @@ export default {
 
   methods: {
     sendMessage() {
-      this.$emit('send', this.message);
-      this.message = '';
+      if (this.message !== '') {
+        this.$emit('send', this.message);
+        this.message = '';
+      }
     },
   },
 };
