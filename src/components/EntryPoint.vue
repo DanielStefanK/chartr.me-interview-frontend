@@ -33,17 +33,27 @@ export default {
   methods: {
     loadMetaData() {
       this.isLoading = true;
-      setTimeout(() => {
-        this.meta = {
-          name: 'sample',
-          company: 'sample Company',
-        };
-        this.isLoading = false;
-      }, 3000);
+      fetch(
+        (process.env.VUE_APP_BACKEND || 'http://localhost:3000/') +
+          'api/' +
+          this.$route.params.id,
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          if (data.error) {
+            this.error = true;
+            this.errorMsg = data.error;
+          } else {
+            this.meta = data.interview;
+          }
+          this.isLoading = false;
+        });
     },
   },
 
-  created() {
+  mounted() {
     this.loadMetaData();
   },
 };

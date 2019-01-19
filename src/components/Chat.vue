@@ -5,7 +5,7 @@
       <v-spacer/>
       <v-tooltip bottom>
         <v-icon slot="activator" class="white--text">fa-question-circle</v-icon>
-        <span>This is a Interview from {{meta.company}}</span>
+        <span>This is a Interview from {{meta.company.name}}</span>
       </v-tooltip>
     </v-toolbar>
     <v-layout row wrap>
@@ -43,6 +43,7 @@ export default {
     return {
       disabled: true,
       isLoading: false,
+      initalPhase: true,
       messages: [],
       name: '',
       email: '',
@@ -72,6 +73,10 @@ export default {
             .toString(36)
             .substr(2, 9),
       });
+
+      if (!this.initalPhase) {
+        this.handleSend(message);
+      }
 
       if (cb) {
         cb(message);

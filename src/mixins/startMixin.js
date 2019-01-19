@@ -1,4 +1,12 @@
+import io from 'socket.io-client';
+
 export default {
+  data() {
+    return {
+      socket: null,
+    };
+  },
+
   methods: {
     onStart() {
       setTimeout(() => {
@@ -84,8 +92,46 @@ export default {
 
     connectInterview() {
       this.isLoading = true;
-      // TODO
+      // TODO: use .env
+      this.socket = io(process.env.VUE_APP_BACKEND_WS);
+
+      this.socket.on('connect', () => {
+        this.initalPhase = false;
+        this.isLoading = false;
+      });
+
+      this.socket.on('error', () => {
+        this.handleError;
+      });
+
+      this.socket.emit('interview_id', this.$route.params.id);
+
+      this.socket.emit('credentials', {
+        name: this.name,
+        email: this.email,
+      });
+
+      this.socket.on('question', this.handleQuestion);
     },
+
+    handleSend(msg) {
+      this.socket.emit('message', msg);
+    },
+
+    handleQuestion(q) {
+      this.disabled = false;
+      this.messages.push({
+        content: q,
+        own: false,
+        key:
+          '_' +
+          Math.random()
+            .toString(36)
+            .substr(2, 9),
+      });
+    },
+
+    handleError() {},
 
     gotEmail(email) {
       if (
