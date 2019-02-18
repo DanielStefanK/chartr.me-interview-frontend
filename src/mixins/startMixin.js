@@ -115,7 +115,7 @@ export default {
     },
 
     handleSend(msg) {
-      this.socket.emit('message', msg);
+      this.socket.emit('message', this.$route.params.id, msg);
     },
 
     handleQuestion(q) {
