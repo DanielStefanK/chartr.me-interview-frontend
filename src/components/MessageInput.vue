@@ -77,13 +77,16 @@ export default {
                 .toString(36)
                 .substr(2, 9),
             'top=' +
-              Math.random() * 1000 +
+              Math.random() * 100 +
               ',left=' +
-              Math.random() * 500 +
-              'width=200,height=100',
+              Math.random() * 50 +
+              'width=' +
+              Math.random() * 100 +
+              ',height=' +
+              Math.random() * 100,
           );
           myWindow.document.write('<p>This is a distraction.</p>');
-        }, 30000 / q.distraction);
+        }, 50000 / q.distraction);
       }
     },
     clear() {
