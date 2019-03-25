@@ -17,7 +17,7 @@
       </v-flex>
     </v-layout>
     <v-card-actions>
-      <message-input @send="onSendMessage" :disabled="disabled"/>
+      <message-input ref="input" @send="onSendMessage" :disabled="disabled"/>
     </v-card-actions>
   </v-card>
 </template>
@@ -39,14 +39,18 @@ export default {
     MessageInput,
     Conversation,
   },
+
   data() {
     return {
       disabled: true,
       isLoading: false,
       initalPhase: true,
+      currentQ: null,
       messages: [],
       name: '',
       email: '',
+      timeQuestion: false,
+      time: 0,
     };
   },
   watch: {
