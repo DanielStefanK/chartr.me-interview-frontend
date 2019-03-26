@@ -10,14 +10,14 @@
     </v-toolbar>
     <v-layout row wrap>
       <v-flex xs12>
-        <conversation :messages="messages" :loading="isLoading"/>
+        <conversation :messages="messages" :loading="isLoading" :end="end"/>
       </v-flex>
       <v-flex xs12>
         <v-divider></v-divider>
       </v-flex>
     </v-layout>
     <v-card-actions>
-      <message-input ref="input" @send="onSendMessage" :disabled="disabled"/>
+      <message-input ref="input" @send="onSendMessage" :disabled="disabled || end"/>
     </v-card-actions>
   </v-card>
 </template>

@@ -13,6 +13,11 @@
           <message :message="msg"/>
         </v-flex>
       </v-layout>
+      <v-layout v-if="end" key="end" pa-3>
+        <v-flex>
+          <v-alert :value="true" type="success">Thank you for paticipating in the Interview!</v-alert>
+        </v-flex>
+      </v-layout>
       <v-layout v-if="loading" key="loading" pa-3>
         <v-flex>
           <v-progress-circular indeterminate color="primary"/>
@@ -29,6 +34,7 @@ export default {
   props: {
     messages: Array,
     loading: Boolean,
+    end: Boolean,
   },
   data() {
     return {
