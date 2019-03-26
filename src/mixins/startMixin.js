@@ -4,6 +4,7 @@ export default {
   data() {
     return {
       socket: null,
+      end: false,
     };
   },
 
@@ -112,6 +113,7 @@ export default {
       });
 
       this.socket.on('question', this.handleQuestion);
+      this.socket.on('end', () => (this.end = true));
     },
 
     handleSend(msg) {
@@ -120,8 +122,9 @@ export default {
 
     handleQuestion(q) {
       this.disabled = false;
+      this.$refs.input.newQuestion(q);
       this.messages.push({
-        content: q,
+        content: q.question,
         own: false,
         key:
           '_' +
